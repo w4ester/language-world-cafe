@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Language Learning - English & Spanish</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.5em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        .hero .tagline {
+            font-size: 1.1em;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .btn-tertiary {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-tertiary:hover {
+            background: #138496;
+            transform: scale(1.05);
+        }
+
+        .coming-soon {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px dashed #dee2e6;
+            cursor: not-allowed;
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .features-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .features-section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            color: #764ba2;
+            margin-bottom: 8px;
+        }
+
+        .feature-content p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px;
+            opacity: 0.9;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2em;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>☕🌎 Cafe Language Learning</h1>
+            <div class="subtitle">Master Real Conversations in English & Spanish</div>
+            <div class="tagline">Immersive role-play experiences for confident communication</div>
+        </div>
+
+        <!-- Main Cards Grid -->
+        <div class="cards-grid">
+            <!-- English Script Card -->
+            <div class="card">
+                <div class="card-icon">🇺🇸</div>
+                <h2>English Script</h2>
+                <p>Complete guide to ordering lunch at a cafe in English with realistic vocabulary and natural phrases.</p>
+                <div class="card-buttons">
+                    <a href="one-pager.html" class="btn btn-primary">View Script</a>
+                    <button class="btn btn-tertiary" onclick="alert('AI Practice coming soon!')">Practice with AI</button>
+                </div>
+            </div>
+
+            <!-- Spanish Script Card -->
+            <div class="card">
+                <div class="card-icon">🇪🇸</div>
+                <h2>Spanish Script</h2>
+                <p>Full Spanish translation of the cafe conversation with cultural notes and regional variations.</p>
+                <div class="card-buttons">
+                    <a href="one-pager-es.html" class="btn btn-primary">View Script</a>
+                    <button class="btn btn-tertiary" onclick="alert('AI Practice coming soon!')">Practice with AI</button>
+                </div>
+            </div>
+
+            <!-- AI Role Play - Host Card -->
+            <div class="card">
+                <div class="card-icon">👋</div>
+                <h2>AI Host/Greeter</h2>
+                <span class="badge">IN PROGRESS</span>
+                <p>Practice being welcomed to the cafe. The AI plays the host role and responds to your greetings.</p>
+                <div class="card-buttons">
+                    <button class="btn coming-soon">English Version</button>
+                    <button class="btn coming-soon">Spanish Version</button>
+                </div>
+            </div>
+
+            <!-- AI Role Play - Server Card -->
+            <div class="card">
+                <div class="card-icon">🍽️</div>
+                <h2>AI Server/Waiter</h2>
+                <span class="badge">IN PROGRESS</span>
+                <p>Practice ordering food and drinks. The AI takes your order and handles the full dining experience.</p>
+                <div class="card-buttons">
+                    <button class="btn coming-soon">English Version</button>
+                    <button class="btn coming-soon">Spanish Version</button>
+                </div>
+            </div>
+
+            <!-- AI Role Play - Customer Card -->
+            <div class="card">
+                <div class="card-icon">😊</div>
+                <h2>AI Customer</h2>
+                <span class="badge">IN PROGRESS</span>
+                <p>Practice being the server! The AI plays a customer and you take their order.</p>
+                <div class="card-buttons">
+                    <button class="btn coming-soon">English Version</button>
+                    <button class="btn coming-soon">Spanish Version</button>
+                </div>
+            </div>
+
+            <!-- Full Experience Card -->
+            <div class="card">
+                <div class="card-icon">🎭</div>
+                <h2>Full Experience</h2>
+                <span class="badge">IN PROGRESS</span>
+                <p>Complete cafe visit from start to finish with multiple AI characters and realistic scenarios.</p>
+                <div class="card-buttons">
+                    <button class="btn coming-soon">English Version</button>
+                    <button class="btn coming-soon">Spanish Version</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2>🚀 What Makes This Special</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-content">
+                        <h3>Real Conversations</h3>
+                        <p>Learn how people actually talk in cafes, not textbook phrases</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-content">
+                        <h3>Role-Based Practice</h3>
+                        <p>Practice as customer, server, or host to understand all perspectives</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-content">
+                        <h3>AI-Powered Learning</h3>
+                        <p>Practice anytime with intelligent AI characters that adapt to your level</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-content">
+                        <h3>Bilingual Support</h3>
+                        <p>Switch between English and Spanish to master both languages</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-content">
+                        <h3>Mobile Friendly</h3>
+                        <p>Learn on any device - phone, tablet, or computer</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">🎓</div>
+                    <div class="feature-content">
+                        <h3>Self-Paced</h3>
+                        <p>No pressure, no schedules - learn at your own speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Built with ❤️ for language learners everywhere</p>
+            <p>Questions? Need help? <a href="mailto:support@example.com">Contact us</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Add click analytics or future functionality here
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only handle clicks on the card itself, not buttons
+                if (e.target === card || e.target.closest('.card-icon') || e.target.closest('h2') || e.target.closest('p')) {
+                    const links = card.querySelectorAll('a.btn-primary');
+                    if (links.length > 0) {
+                        links[0].click();
+                    }
+                }
+            });
+        });
+
+        // Add smooth scroll animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordering Lunch at a Cafe - English Script</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-save {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+
+        .dialogue {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: #764ba2;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .person-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .person-card h3 {
+            margin-top: 0;
+            color: #28a745;
+        }
+
+        .phrases-list {
+            background: #fff3cd;
+            padding: 15px 15px 15px 35px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+        }
+
+        .phrases-list li {
+            margin: 8px 0;
+        }
+
+        .flow-step {
+            background: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .flow-number {
+            background: #007bff;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .key-vocab {
+            background: #d1ecf1;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 15px 0;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #e9ecef;
+            margin: 20px 0;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .action-buttons {
+                display: none;
+            }
+
+            .header {
+                background: #667eea;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+
+            .dialogue, .person-card, .flow-step {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Ordering Lunch at a Cafe</h1>
+            <p>Realistic English Script & Vocabulary Guide</p>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-back" onclick="goBack()">
+                ← Back to Home
+            </button>
+            <button class="btn btn-print" onclick="printPage()">
+                🖨️ Print
+            </button>
+            <button class="btn btn-save" onclick="savePage()">
+                💾 Save as PDF
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- Full Script Section -->
+            <div class="section">
+                <h2>Full Script</h2>
+
+                <h3>Arriving at the cafe</h3>
+                <div class="dialogue">
+                    <span class="speaker">Host:</span> Hi! How many today?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> Just one, please.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Host:</span> Great! You can sit anywhere you like. I'll bring you a menu.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> Thanks!
+                </div>
+
+                <hr>
+
+                <h3>After looking at the menu</h3>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Hey there! How are you doing today?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> I'm good, thanks! How about you?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Doing well! Can I get you something to drink?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> I'll have an iced coffee, please.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Sure thing. Are you ready to order, or do you need a few more minutes?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> I'm ready. Can I get the turkey club sandwich?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Absolutely. That comes with fries or a side salad. Which would you prefer?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> I'll do the fries, please.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Perfect. Anything else?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> No, that's it. Thanks!
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Great, I'll get that right out for you.
+                </div>
+
+                <hr>
+
+                <h3>When food arrives</h3>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Here's your iced coffee and turkey club with fries. Can I get you anything else?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> This looks great. I'm all set for now.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Awesome! Enjoy!
+                </div>
+
+                <hr>
+
+                <h3>Finishing up</h3>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> How was everything?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> Really good, thanks!
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Glad to hear it! Can I get you the check?
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> Yes, please.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Here you go. No rush—whenever you're ready.
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Customer:</span> <em>[leaves payment]</em> Thanks so much!
+                </div>
+                <div class="dialogue">
+                    <span class="speaker">Server:</span> Thank you! Have a great day!
+                </div>
+            </div>
+
+            <!-- People Involved Section -->
+            <div class="section">
+                <h2>Breaking Down the Parts (People Involved)</h2>
+
+                <div class="person-card">
+                    <h3>1. GREETER/HOST</h3>
+                    <p><strong>Role:</strong></p>
+                    <ul>
+                        <li>Welcomes customers when they enter</li>
+                        <li>Asks how many people are dining</li>
+                        <li>Shows customers to their table or tells them where to sit</li>
+                        <li>May hand out menus</li>
+                    </ul>
+                    <div class="phrases-list">
+                        <strong>Common phrases:</strong>
+                        <ul>
+                            <li>"Hi! How many today?"</li>
+                            <li>"Right this way"</li>
+                            <li>"Sit anywhere you like"</li>
+                            <li>"Someone will be right with you"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <h3>2. SERVER/WAITER</h3>
+                    <p><strong>This is usually the main person you interact with. They:</strong></p>
+                    <ul>
+                        <li>Greet you at the table</li>
+                        <li>Take your drink order</li>
+                        <li>Take your food order</li>
+                        <li>Bring your food</li>
+                        <li>Check if you need anything</li>
+                        <li>Bring the bill/check</li>
+                        <li>Process payment (sometimes)</li>
+                    </ul>
+                    <div class="phrases-list">
+                        <strong>Common phrases:</strong>
+                        <ul>
+                            <li>"What can I get you to drink?"</li>
+                            <li>"Are you ready to order?"</li>
+                            <li>"That comes with..."</li>
+                            <li>"Anything else?"</li>
+                            <li>"How's everything tasting?"</li>
+                            <li>"Can I get you the check?"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <h3>3. BUSSER</h3>
+                    <p><strong>(Optional - not always present in small cafes)</strong></p>
+                    <ul>
+                        <li>Fills water glasses</li>
+                        <li>Clears empty plates and dishes</li>
+                        <li>Cleans tables between customers</li>
+                        <li>May bring bread or chips</li>
+                    </ul>
+                    <div class="phrases-list">
+                        <strong>Common phrases:</strong>
+                        <ul>
+                            <li>"Can I take these plates?"</li>
+                            <li>"All finished?"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="person-card">
+                    <h3>4. CASHIER</h3>
+                    <p><strong>(If paying at a counter instead of table)</strong></p>
+                    <ul>
+                        <li>Takes payment</li>
+                        <li>Processes credit cards or cash</li>
+                        <li>May hand you a receipt</li>
+                    </ul>
+                    <div class="phrases-list">
+                        <strong>Common phrases:</strong>
+                        <ul>
+                            <li>"Will this be together or separate?"</li>
+                            <li>"Cash or card?"</li>
+                            <li>"Would you like your receipt?"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typical Flow Section -->
+            <div class="section">
+                <h2>Typical Flow (Start to Finish)</h2>
+
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div><strong>Enter cafe</strong> → Interact with <strong>HOST</strong></div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div><strong>Sit down</strong> → <strong>SERVER</strong> brings menu/water</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div><strong>Look at menu</strong></div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div><strong>SERVER</strong> takes drink order</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">5</div>
+                    <div><strong>Drinks arrive</strong></div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">6</div>
+                    <div><strong>SERVER</strong> takes food order</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">7</div>
+                    <div><strong>Wait for food</strong> (kitchen prepares - you don't interact)</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">8</div>
+                    <div><strong>Food arrives</strong> → <strong>SERVER</strong> delivers it</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">9</div>
+                    <div><strong>Eat your meal</strong></div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">10</div>
+                    <div><strong>SERVER</strong> may check in once during meal</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">11</div>
+                    <div><strong>Finish eating</strong> → <strong>BUSSER</strong> or <strong>SERVER</strong> may clear plates</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">12</div>
+                    <div><strong>Request check</strong> → <strong>SERVER</strong> brings bill</div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">13</div>
+                    <div><strong>Pay</strong> → Leave payment with <strong>SERVER</strong> or pay at <strong>CASHIER</strong></div>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-number">14</div>
+                    <div><strong>Leave</strong> → Sometimes say goodbye to <strong>HOST/SERVER</strong></div>
+                </div>
+            </div>
+
+            <!-- Key Vocabulary Section -->
+            <div class="section">
+                <h2>Key Vocabulary & Phrases</h2>
+
+                <div class="key-vocab">
+                    <h3>Casual/Natural Language:</h3>
+                    <ul>
+                        <li>"I'll have..." / "I'll do..." / "Can I get..."</li>
+                        <li>"That's it" / "That's all"</li>
+                        <li>"All set" / "I'm good"</li>
+                        <li>"No rush" / "Whenever you're ready"</li>
+                        <li>"Looks good" / "Looks great"</li>
+                    </ul>
+                </div>
+
+                <div class="key-vocab">
+                    <h3>Avoiding Overly Formal:</h3>
+                    <ul>
+                        <li>❌ Instead of "I would like to order," say ✅ "I'll have"</li>
+                        <li>❌ Instead of "Excuse me, waiter," just make eye contact or say ✅ "Hey" politely</li>
+                        <li>✅ You don't need to say "please" and "thank you" after every single sentence, but it's nice to include them naturally</li>
+                    </ul>
+                </div>
+
+                <div style="background: #d4edda; padding: 20px; border-radius: 8px; border-left: 4px solid #28a745; margin-top: 20px; text-align: center;">
+                    <strong style="font-size: 1.2em; color: #155724;">This is how real people talk in American cafes! 🇺🇸☕</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function printPage() {
+            window.print();
+        }
+
+        function savePage() {
+            // Trigger print dialog which allows saving as PDF
+            window.print();
+        }
+
+        function goBack() {
+            // Check if there's a referring page
+            if (document.referrer && document.referrer.includes('index.html')) {
+                window.history.back();
+            } else {
+                // Try to go to index.html in the same directory
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Optional: Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P or Cmd+P for print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printPage();
+            }
+            // Ctrl+S or Cmd+S for save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                savePage();
+            }
+        });
+    </script>
+</body>
+</html>
