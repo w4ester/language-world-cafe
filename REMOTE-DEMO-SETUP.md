@@ -220,10 +220,12 @@ railway up
 - Use OpenAI API instead of Ollama
 - Or deploy to a VPS with GPU
 
-### **Option 2: DigitalOcean Droplet (Full Control)**
+### **Option 2: Hetzner Cloud CX22 (≈ $8/month)**
 
-1. Create droplet (Ubuntu 22.04, 8GB RAM minimum)
-2. SSH in and install:
+Looking for something under $10? Hetzner's **CX22** plan (2 vCPU / 8GB RAM / 80GB SSD) is €7.89/mo (~$8.50). Plenty for Qwen3:8B + Whisper.
+
+1. Create server (Ubuntu 22.04) in Hetzner Cloud console
+2. SSH in and install dependencies:
    ```bash
    # Install Ollama
    curl -fsSL https://ollama.com/install.sh | sh
@@ -231,19 +233,46 @@ railway up
    # Pull Qwen3
    ollama pull qwen3:8b
 
-   # Install Python dependencies
+   # Install project
    git clone https://github.com/w4ester/language-world-cafe.git
    cd language-world-cafe
    pip3 install -r requirements.txt
 
-   # Start backend
+   # Start backend (can use tmux/systemd)
    python3 voice_backend.py
    ```
 
-3. Setup reverse proxy (nginx) for HTTPS
-4. Use droplet IP or add custom domain
+3. Add swap (Hetzner allows 8GB RAM but Qwen may spike):
+   ```bash
+   sudo fallocate -l 4G /swapfile
+   sudo chmod 600 /swapfile
+   sudo mkswap /swapfile
+   sudo swapon /swapfile
+   echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+   ```
 
-**Cost:** $48-96/month for 8GB+ RAM droplet
+4. Secure with HTTPS using Caddy (auto Let's Encrypt):
+   ```bash
+   curl -fsSL https://getcaddy.com | bash -s personal
+
+   sudo tee /etc/caddy/Caddyfile <<'EOF'
+   your-domain.com {
+       reverse_proxy localhost:5001
+   }
+   EOF
+
+   sudo systemctl enable --now caddy
+   ```
+
+**Cost:** €7.89 + VAT (≈ $8-9) per month. Billed hourly; delete when not needed to save more.
+
+### **Option 3: DigitalOcean Droplet (Full Control)**
+
+1. Create droplet (Ubuntu 22.04, 8GB RAM minimum)
+2. SSH in and install same stack as above
+3. Configure nginx/Caddy for HTTPS
+
+**Cost:** $48-96/month for 8GB+ RAM droplet (more expensive but US-based data centers)
 
 ---
 

@@ -388,6 +388,81 @@
                 max-height: 400px;
             }
         }
+
+        /* XP Notification */
+        .xp-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            z-index: 1000;
+            animation: slideInRight 0.5s ease-out, fadeOut 0.5s ease-out 2.5s;
+            pointer-events: none;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .xp-notification .xp-amount {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .xp-notification .xp-details {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Progress Link */
+        .progress-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .progress-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+        }
+
+        .progress-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -478,6 +553,15 @@
         </div>
     </div>
 
+    <!-- Progress Dashboard Link -->
+    <a href="progress-dashboard.html" class="progress-link" id="progressLink">
+        🏆 Progress
+        <span class="progress-badge" id="progressBadge">Lvl 1</span>
+    </a>
+
+    <!-- Progress Tracker -->
+    <script src="progress-tracker.js"></script>
+
     <script>
         const API_BASE = 'http://localhost:5001';
         let mediaRecorder = null;
@@ -485,6 +569,8 @@
         let isRecording = false;
         let conversationHistory = [];
         let currentAudio = null;
+        let sessionStartTime = null;
+        let lastGrammarScore = null;
 
         // Get scenario from URL params
         const urlParams = new URLSearchParams(window.location.search);
@@ -502,6 +588,12 @@
         window.addEventListener('load', async () => {
             document.getElementById('languageSelect').value = defaultLanguage;
             document.getElementById('scenarioName').textContent = scenarioNames[scenario] || scenario;
+
+            // Initialize session start time
+            sessionStartTime = Date.now();
+
+            // Update progress badge
+            updateProgressBadge();
 
             try {
                 const response = await fetch(`${API_BASE}/health`);
@@ -696,6 +788,11 @@
             const feedbackDiv = document.createElement('div');
             feedbackDiv.className = 'coach-feedback auto';
 
+            // Store grammar score for XP calculation
+            if (feedback.grammar_score) {
+                lastGrammarScore = feedback.grammar_score;
+            }
+
             let focusWordsHtml = '';
             if (feedback.focus_words && feedback.focus_words.length > 0) {
                 focusWordsHtml = `
@@ -734,6 +831,9 @@
 
             coachContent.appendChild(feedbackDiv);
             coachContent.scrollTop = coachContent.scrollHeight;
+
+            // Record progress after feedback
+            recordConversationProgress();
         }
 
         async function askCoach() {
@@ -814,6 +914,8 @@
         function clearConversation() {
             if (confirm('Start a new conversation? This will clear everything.')) {
                 conversationHistory = [];
+                sessionStartTime = Date.now();
+                lastGrammarScore = null;
                 document.getElementById('currentExchange').innerHTML = `
                     <div style="text-align: center; color: #999; font-size: 0.9em;">
                         Your conversation will appear here
@@ -828,6 +930,64 @@
                     </div>
                 `;
                 updateUI('ready', 'Ready to talk');
+            }
+        }
+
+        function recordConversationProgress() {
+            if (!window.progressTracker) {
+                console.warn('Progress tracker not loaded');
+                return;
+            }
+
+            const language = document.getElementById('languageSelect').value;
+            const exchanges = Math.floor(conversationHistory.length / 2);
+            const duration = sessionStartTime ? Math.floor((Date.now() - sessionStartTime) / 1000) : 0;
+
+            // Estimate words spoken (rough estimate: 3 words per second of speech)
+            const estimatedWords = duration * 3;
+
+            const result = progressTracker.recordConversation({
+                scenario: scenario,
+                language: language,
+                exchanges: exchanges,
+                grammarScore: lastGrammarScore,
+                duration: duration,
+                wordsSpoken: estimatedWords
+            });
+
+            // Show XP notification
+            showXPNotification(result.xpEarned, result.totalXP, result.level);
+
+            // Update progress badge
+            updateProgressBadge();
+        }
+
+        function showXPNotification(xpEarned, totalXP, level) {
+            // Remove any existing notification
+            const existing = document.querySelector('.xp-notification');
+            if (existing) existing.remove();
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'xp-notification';
+            notification.innerHTML = `
+                <div class="xp-amount">+${xpEarned} XP</div>
+                <div class="xp-details">Level ${level} • ${totalXP} XP Total</div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Remove after animation completes
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function updateProgressBadge() {
+            if (!window.progressTracker) return;
+
+            const stats = progressTracker.getStats();
+            const badge = document.getElementById('progressBadge');
+            if (badge) {
+                badge.textContent = `Lvl ${stats.level}`;
             }
         }
 

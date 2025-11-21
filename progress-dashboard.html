@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Dashboard - Language Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        /* Level Card */
+        .level-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .level-display {
+            font-size: 5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .level-title {
+            font-size: 1.5em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .xp-bar-container {
+            background: #e9ecef;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .xp-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .xp-text {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Badges Section */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            color: #667eea;
+            font-size: 1.8em;
+        }
+
+        .badge-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .badge {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .badge.earned {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe6f0 100%);
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .badge.locked {
+            opacity: 0.4;
+            filter: grayscale(1);
+        }
+
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .badge-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .badge-description {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .badge-earned-mark {
+            display: none;
+            background: #28a745;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            margin-top: 8px;
+        }
+
+        .badge.earned .badge-earned-mark {
+            display: inline-block;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .activity-meta {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .activity-xp {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .level-card, .section, .stat-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Modal for level up */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .modal-icon {
+            font-size: 5em;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .modal-message {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .badges-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 Your Progress Dashboard</h1>
+            <p>Track your language learning journey</p>
+        </div>
+
+        <!-- Level Card -->
+        <div class="level-card">
+            <div class="level-display" id="levelDisplay">1</div>
+            <div class="level-title" id="levelTitle">Beginner</div>
+
+            <div class="xp-bar-container">
+                <div class="xp-bar" id="xpBar" style="width: 0%">
+                    <span id="xpBarText">0%</span>
+                </div>
+            </div>
+
+            <div class="xp-text" id="xpText">0 / 40 XP to next level</div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-value" id="conversationsCount">0</div>
+                <div class="stat-label">Conversations</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-value" id="streakCount">0</div>
+                <div class="stat-label">Day Streak</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏅</div>
+                <div class="stat-value" id="badgesCount">0/20</div>
+                <div class="stat-label">Badges Earned</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-value" id="daysActive">0</div>
+                <div class="stat-label">Days Active</div>
+            </div>
+        </div>
+
+        <!-- Badges Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🏅 Badges & Achievements</h2>
+                <span class="badge-count" id="badgeProgress">0/20</span>
+            </div>
+            <div class="badges-grid" id="badgesGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="section">
+            <div class="section-header">
+                <h2>📊 Recent Activity</h2>
+            </div>
+            <div class="activity-list" id="activityList">
+                <div style="text-align: center; padding: 40px; color: #999;">
+                    No activity yet. Start practicing to see your progress!
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <a href="index.html" class="btn btn-primary">🎤 Start Practicing</a>
+            <button class="btn btn-secondary" onclick="exportProgress()">📥 Export Progress</button>
+            <button class="btn btn-danger" onclick="resetProgress()">🔄 Reset Progress</button>
+        </div>
+    </div>
+
+    <!-- Level Up Modal -->
+    <div class="modal" id="levelUpModal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title">Level Up!</div>
+            <div class="modal-message" id="levelUpMessage">
+                You reached Level 2!
+            </div>
+            <button class="btn btn-primary" onclick="closeLevelUpModal()">Awesome!</button>
+        </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <script src="progress-tracker.js"></script>
+
+    <script>
+        // Load and display progress
+        function loadDashboard() {
+            const tracker = window.progressTracker;
+            const stats = tracker.getStats();
+
+            // Update level display
+            document.getElementById('levelDisplay').textContent = stats.level;
+            document.getElementById('levelTitle').textContent = getLevelTitle(stats.level);
+
+            // Update XP bar
+            const progress = stats.levelProgress * 100;
+            document.getElementById('xpBar').style.width = progress + '%';
+            document.getElementById('xpBarText').textContent = Math.round(progress) + '%';
+            document.getElementById('xpText').textContent =
+                `${stats.totalXP} XP • ${stats.xpToNextLevel} XP to Level ${stats.level + 1}`;
+
+            // Update stats
+            document.getElementById('conversationsCount').textContent = stats.conversationsCompleted;
+            document.getElementById('streakCount').textContent = stats.currentStreak;
+            document.getElementById('badgesCount').textContent = `${stats.badgesEarned}/${stats.totalBadges}`;
+            document.getElementById('daysActive').textContent = stats.daysActive;
+            document.getElementById('badgeProgress').textContent = `${stats.badgesEarned}/${stats.totalBadges}`;
+
+            // Load badges
+            loadBadges();
+
+            // Load recent activity
+            loadActivity();
+        }
+
+        function getLevelTitle(level) {
+            if (level === 1) return 'Beginner';
+            if (level <= 3) return 'Novice';
+            if (level <= 5) return 'Intermediate';
+            if (level <= 7) return 'Advanced';
+            if (level <= 10) return 'Expert';
+            return 'Master';
+        }
+
+        function loadBadges() {
+            const tracker = window.progressTracker;
+            const badges = tracker.getAllBadges();
+            const grid = document.getElementById('badgesGrid');
+
+            grid.innerHTML = badges.map(badge => `
+                <div class="badge ${badge.earned ? 'earned' : 'locked'}">
+                    <div class="badge-icon">${badge.icon}</div>
+                    <div class="badge-name">${badge.name}</div>
+                    <div class="badge-description">${badge.description}</div>
+                    <div class="badge-earned-mark">✓ Earned</div>
+                </div>
+            `).join('');
+        }
+
+        function loadActivity() {
+            const tracker = window.progressTracker;
+            const sessions = tracker.data.sessions.slice(-10).reverse();
+            const list = document.getElementById('activityList');
+
+            if (sessions.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #999;">
+                        No activity yet. Start practicing to see your progress!
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = sessions.map(session => {
+                const date = new Date(session.timestamp);
+                const scenarioNames = {
+                    'server_only': 'Ordering (Customer)',
+                    'customer_only': 'Serving (Server)',
+                    'host_only': 'Greeting (Host)',
+                    'full_experience': 'Full Experience'
+                };
+
+                return `
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">
+                                ${scenarioNames[session.scenario] || session.scenario}
+                            </div>
+                            <div class="activity-meta">
+                                ${session.language.toUpperCase()} •
+                                ${session.exchanges} exchanges •
+                                ${date.toLocaleDateString()} ${date.toLocaleTimeString()}
+                                ${session.grammarScore ? ` • ${session.grammarScore}` : ''}
+                            </div>
+                        </div>
+                        <div class="activity-xp">+${session.xpEarned} XP</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function exportProgress() {
+            window.progressTracker.exportProgress();
+        }
+
+        function resetProgress() {
+            if (window.progressTracker.resetProgress()) {
+                loadDashboard();
+            }
+        }
+
+        function closeLevelUpModal() {
+            document.getElementById('levelUpModal').classList.remove('show');
+        }
+
+        // Listen for level up events
+        window.addEventListener('levelUp', (event) => {
+            const { newLevel } = event.detail;
+            document.getElementById('levelUpMessage').textContent =
+                `You reached Level ${newLevel}!`;
+            document.getElementById('levelUpModal').classList.add('show');
+        });
+
+        // Listen for progress updates
+        window.addEventListener('progressUpdate', () => {
+            loadDashboard();
+        });
+
+        // Load dashboard on page load
+        window.addEventListener('load', loadDashboard);
+    </script>
+</body>
+</html>
