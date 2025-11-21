@@ -48,6 +48,54 @@
             font-style: italic;
         }
 
+        .remote-callout {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(238, 90, 111, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .remote-callout-content h3 {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+
+        .remote-callout-content p {
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        .remote-callout .btn-remote {
+            padding: 15px 30px;
+            background: white;
+            color: #ee5a6f;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .remote-callout .btn-remote:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .remote-callout {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -264,6 +312,15 @@
             <h1>☕🌎 Cafe Language Learning</h1>
             <div class="subtitle">Master Real Conversations in English & Spanish</div>
             <div class="tagline">Immersive role-play experiences for confident communication</div>
+        </div>
+
+        <!-- Remote Demo Callout -->
+        <div class="remote-callout">
+            <div class="remote-callout-content">
+                <h3>🌐 Share This Demo Remotely</h3>
+                <p>Set up a tunnel (ngrok/Cloudflare) and let others try the live AI coach from anywhere!</p>
+            </div>
+            <a href="voice-chat-remote.html" class="btn-remote">🚀 Remote Setup</a>
         </div>
 
         <!-- Main Cards Grid -->

@@ -55,6 +55,54 @@ start-demo.bat
 
 ---
 
+## 🌍 Remote Demo (Share with Others)
+
+Want to share the live demo with remote participants? Use tunneling to expose your local backend!
+
+### Quick Start (2 minutes)
+
+1. **Start the backend**
+   ```bash
+   ./start-voice-demo.sh
+   ```
+
+2. **Create a tunnel** (choose one)
+   ```bash
+   # Option 1: ngrok (easiest, free)
+   ngrok http 5001 --region us
+   # → Copy URL: https://abc123.ngrok-free.app
+
+   # Option 2: Cloudflare (no timeouts)
+   cloudflared tunnel --url http://localhost:5001
+   # → Copy URL: https://xyz.trycloudflare.com
+
+   # Option 3: Tailscale (private sharing)
+   tailscale funnel 5001
+   ```
+
+3. **Share with participants**
+   - Deploy repo to GitHub Pages
+   - Send link: `https://YOUR-PAGES-URL/voice-chat-remote.html`
+   - Users enter your tunnel URL → instant access!
+
+### Features
+
+✅ **Automatic connection testing** - Verifies backend is reachable
+✅ **URL persistence** - Saves tunnel URL in localStorage
+✅ **Localhost fallback** - "Use Localhost" button for local testing
+✅ **Works with all tunnels** - ngrok, Cloudflare, Tailscale, custom domains
+
+### Full Guide
+
+📖 See **[REMOTE-DEMO-SETUP.md](REMOTE-DEMO-SETUP.md)** for:
+- Detailed setup instructions for each tunnel service
+- Troubleshooting tips
+- Cloud deployment options (VPS, Railway, DigitalOcean)
+- Security considerations
+- Demo participant instructions
+
+---
+
 ## 📁 Project Structure
 
 ```

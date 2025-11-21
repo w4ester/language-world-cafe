@@ -23,6 +23,34 @@ Show teachers how students can practice cafe conversations with **Qwen3-14B** (1
 
 ---
 
+## 🌐 Remote Demo Setup
+
+Want to share this demo with remote participants or deploy it for broader access?
+
+### Quick Remote Demo (Using Tunnels)
+
+📖 **See [REMOTE-DEMO-SETUP.md](REMOTE-DEMO-SETUP.md)** for complete instructions on:
+
+- **ngrok** - Easiest option, 2-hour free sessions
+- **Cloudflare Tunnel** - Free forever, no timeouts
+- **Tailscale Funnel** - Private sharing with specific people
+- **Cloud deployment** - VPS, Railway, DigitalOcean options
+
+### TL;DR for Quick Share:
+```bash
+# Terminal 1: Start backend
+./start-voice-demo.sh
+
+# Terminal 2: Create tunnel
+ngrok http 5001 --region us
+# Copy the https://xxx.ngrok-free.app URL
+
+# Share voice-chat-remote.html with participants
+# They enter your tunnel URL → instant access!
+```
+
+---
+
 ## 📦 One-Time Setup (20 minutes)
 
 ### Step 1: Install Ollama + Qwen3:14B
