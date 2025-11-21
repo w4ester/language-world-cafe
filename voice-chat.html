@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Chat Redirect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 520px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        a {
+            color: #ffd966;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        (function redirectToCoach() {
+            const search = window.location.search && window.location.search.length > 1
+                ? window.location.search
+                : '?scenario=server_only&lang=en';
+
+            const target = `voice-chat-with-coach.html${search}`;
+
+            // Delay slightly so users on slow machines see the message
+            setTimeout(() => {
+                window.location.replace(target);
+            }, 400);
+
+            window.redirectTarget = target;
+        })();
+    </script>
+</head>
+<body>
+    <div class="card">
+        <h1>We moved! 🎧</h1>
+        <p>
+            The voice conversation experience now lives in our new
+            <strong>Voice + Live Coach</strong> interface for instant grammar & pronunciation feedback.
+        </p>
+        <p>
+            You’ll be redirected automatically. If nothing happens,
+            <a id="manualLink" href="#">click here to open the updated experience</a>.
+        </p>
+        <noscript>
+            <p>
+                JavaScript is required. Please visit
+                <a href="voice-chat-with-coach.html?scenario=server_only&lang=en">
+                    voice-chat-with-coach.html
+                </a>
+                manually.
+            </p>
+        </noscript>
+    </div>
+
+    <script>
+        const link = document.getElementById('manualLink');
+        if (link && window.redirectTarget) {
+            link.href = window.redirectTarget;
+        }
+    </script>
+</body>
+</html>

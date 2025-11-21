@@ -1,0 +1,258 @@
+{
+  "scenarios": {
+    "full_experience": {
+      "en": {
+        "name": "Complete Cafe Visit",
+        "stages": [
+          {
+            "name": "Arriving at the Cafe",
+            "ai_role": "host",
+            "script": [
+              { "speaker": "Host", "line": "Hi! How many today?" },
+              { "speaker": "Customer", "line": "Just one, please." },
+              { "speaker": "Host", "line": "Great! You can sit anywhere you like. I'll bring you a menu." },
+              { "speaker": "Customer", "line": "Thanks!" }
+            ],
+            "ai_lines": ["Hi! How many today?", "Great! You can sit anywhere you like. I'll bring you a menu."],
+            "tips": "Respond naturally. Say how many people, thank them for seating you."
+          },
+          {
+            "name": "Ordering Drinks & Food",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Server", "line": "Hey there! How are you doing today?" },
+              { "speaker": "Customer", "line": "I'm good, thanks! How about you?" },
+              { "speaker": "Server", "line": "Doing well! Can I get you something to drink?" },
+              { "speaker": "Customer", "line": "I'll have an iced coffee, please." },
+              { "speaker": "Server", "line": "Sure thing. Are you ready to order, or do you need a few more minutes?" },
+              { "speaker": "Customer", "line": "I'm ready. Can I get the turkey club sandwich?" },
+              { "speaker": "Server", "line": "Absolutely. That comes with fries or a side salad. Which would you prefer?" },
+              { "speaker": "Customer", "line": "I'll do the fries, please." },
+              { "speaker": "Server", "line": "Perfect. Anything else?" },
+              { "speaker": "Customer", "line": "No, that's it. Thanks!" },
+              { "speaker": "Server", "line": "Great, I'll get that right out for you." }
+            ],
+            "ai_lines": [
+              "Hey there! How are you doing today?",
+              "Doing well! Can I get you something to drink?",
+              "Sure thing. Are you ready to order, or do you need a few more minutes?",
+              "Absolutely. That comes with fries or a side salad. Which would you prefer?",
+              "Perfect. Anything else?",
+              "Great, I'll get that right out for you."
+            ],
+            "tips": "Order naturally: 'I'll have...', 'Can I get...'. Ask about what comes with your order."
+          },
+          {
+            "name": "Receiving Food",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Server", "line": "Here's your iced coffee and turkey club with fries. Can I get you anything else?" },
+              { "speaker": "Customer", "line": "This looks great. I'm all set for now." },
+              { "speaker": "Server", "line": "Awesome! Enjoy!" }
+            ],
+            "ai_lines": [
+              "Here's your iced coffee and turkey club with fries. Can I get you anything else?",
+              "Awesome! Enjoy!"
+            ],
+            "tips": "Keep it simple: 'Looks great!', 'I'm good', 'Thank you!'"
+          },
+          {
+            "name": "Finishing & Paying",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Server", "line": "How was everything?" },
+              { "speaker": "Customer", "line": "Really good, thanks!" },
+              { "speaker": "Server", "line": "Glad to hear it! Can I get you the check?" },
+              { "speaker": "Customer", "line": "Yes, please." },
+              { "speaker": "Server", "line": "Here you go. No rush—whenever you're ready." },
+              { "speaker": "Customer", "line": "Thanks so much!" },
+              { "speaker": "Server", "line": "Thank you! Have a great day!" }
+            ],
+            "ai_lines": [
+              "How was everything?",
+              "Glad to hear it! Can I get you the check?",
+              "Here you go. No rush—whenever you're ready.",
+              "Thank you! Have a great day!"
+            ],
+            "tips": "Ask for the check: 'Can I get the check?' or 'I'm ready for the bill'"
+          }
+        ]
+      },
+      "es": {
+        "name": "Visita Completa al Café",
+        "stages": [
+          {
+            "name": "Llegando al Café",
+            "ai_role": "host",
+            "script": [
+              { "speaker": "Anfitrión", "line": "¡Hola! ¿Cuántos son?" },
+              { "speaker": "Cliente", "line": "Solo uno, por favor." },
+              { "speaker": "Anfitrión", "line": "¡Perfecto! Puedes sentarte donde quieras. Te traigo el menú." },
+              { "speaker": "Cliente", "line": "¡Gracias!" }
+            ],
+            "ai_lines": ["¡Hola! ¿Cuántos son?", "¡Perfecto! Puedes sentarte donde quieras. Te traigo el menú."],
+            "tips": "Responde naturalmente. Di cuántas personas son, agradece por el asiento."
+          },
+          {
+            "name": "Ordenando Bebidas y Comida",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Mesero", "line": "¡Hola! ¿Qué tal? ¿Cómo estás?" },
+              { "speaker": "Cliente", "line": "Bien, gracias. ¿Y tú?" },
+              { "speaker": "Mesero", "line": "¡Muy bien! ¿Te traigo algo de tomar?" },
+              { "speaker": "Cliente", "line": "Sí, un café con hielo, por favor." },
+              { "speaker": "Mesero", "line": "Claro. ¿Ya sabes qué vas a pedir, o necesitas un poco más de tiempo?" },
+              { "speaker": "Cliente", "line": "Ya estoy listo. ¿Me das el sándwich club de pavo?" },
+              { "speaker": "Mesero", "line": "Por supuesto. Viene con papas fritas o ensalada. ¿Cuál prefieres?" },
+              { "speaker": "Cliente", "line": "Las papas fritas, por favor." },
+              { "speaker": "Mesero", "line": "Perfecto. ¿Algo más?" },
+              { "speaker": "Cliente", "line": "No, eso es todo. ¡Gracias!" },
+              { "speaker": "Mesero", "line": "Genial, te lo traigo enseguida." }
+            ],
+            "ai_lines": [
+              "¡Hola! ¿Qué tal? ¿Cómo estás?",
+              "¡Muy bien! ¿Te traigo algo de tomar?",
+              "Claro. ¿Ya sabes qué vas a pedir, o necesitas un poco más de tiempo?",
+              "Por supuesto. Viene con papas fritas o ensalada. ¿Cuál prefieres?",
+              "Perfecto. ¿Algo más?",
+              "Genial, te lo traigo enseguida."
+            ],
+            "tips": "Ordena naturalmente: 'Quisiera...', '¿Me das...?'. Pregunta qué viene con tu orden."
+          },
+          {
+            "name": "Recibiendo la Comida",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Mesero", "line": "Aquí tienes tu café con hielo y tu sándwich club con papas fritas. ¿Necesitas algo más?" },
+              { "speaker": "Cliente", "line": "Se ve muy bien. Estoy bien por ahora." },
+              { "speaker": "Mesero", "line": "¡Perfecto! ¡Buen provecho!" }
+            ],
+            "ai_lines": [
+              "Aquí tienes tu café con hielo y tu sándwich club con papas fritas. ¿Necesitas algo más?",
+              "¡Perfecto! ¡Buen provecho!"
+            ],
+            "tips": "Mantén simple: '¡Se ve bien!', 'Estoy bien', '¡Gracias!'"
+          },
+          {
+            "name": "Terminando y Pagando",
+            "ai_role": "server",
+            "script": [
+              { "speaker": "Mesero", "line": "¿Qué tal todo?" },
+              { "speaker": "Cliente", "line": "¡Muy bueno, gracias!" },
+              { "speaker": "Mesero", "line": "¡Me alegra! ¿Te traigo la cuenta?" },
+              { "speaker": "Cliente", "line": "Sí, por favor." },
+              { "speaker": "Mesero", "line": "Aquí tienes. Sin prisa." },
+              { "speaker": "Cliente", "line": "¡Muchas gracias!" },
+              { "speaker": "Mesero", "line": "¡Gracias a ti! ¡Que tengas un buen día!" }
+            ],
+            "ai_lines": [
+              "¿Qué tal todo?",
+              "¡Me alegra! ¿Te traigo la cuenta?",
+              "Aquí tienes. Sin prisa.",
+              "¡Gracias a ti! ¡Que tengas un buen día!"
+            ],
+            "tips": "Pide la cuenta: '¿Me traes la cuenta?' o 'La cuenta, por favor'"
+          }
+        ]
+      }
+    },
+    "server_only": {
+      "en": {
+        "name": "Practice Ordering (You are Customer)",
+        "ai_role": "server",
+        "description": "Practice ordering food as a customer. AI plays the server.",
+        "ai_lines": [
+          "Hey there! How are you doing today?",
+          "Can I get you something to drink?",
+          "Sure thing. Are you ready to order?",
+          "That comes with fries or a side salad. Which would you prefer?",
+          "Perfect. Anything else?",
+          "Great, I'll get that right out for you.",
+          "Here's your order. Enjoy!",
+          "How was everything?",
+          "Glad to hear it! Can I get you the check?"
+        ],
+        "tips": "Order naturally: 'I'll have...', 'Can I get...'. Don't forget to ask what comes with your order!"
+      },
+      "es": {
+        "name": "Práctica de Ordenar (Tú eres Cliente)",
+        "ai_role": "server",
+        "description": "Practica ordenar comida como cliente. La IA juega el mesero.",
+        "ai_lines": [
+          "¡Hola! ¿Qué tal?",
+          "¿Te traigo algo de tomar?",
+          "Claro. ¿Ya sabes qué vas a pedir?",
+          "Viene con papas fritas o ensalada. ¿Cuál prefieres?",
+          "Perfecto. ¿Algo más?",
+          "Genial, te lo traigo enseguida.",
+          "Aquí tienes tu orden. ¡Buen provecho!",
+          "¿Qué tal todo?",
+          "¡Me alegra! ¿Te traigo la cuenta?"
+        ],
+        "tips": "Ordena naturalmente: 'Quisiera...', '¿Me das...?'. ¡No olvides preguntar qué viene con tu orden!"
+      }
+    },
+    "customer_only": {
+      "en": {
+        "name": "Practice Serving (You are Server)",
+        "ai_role": "customer",
+        "description": "Practice being a server. AI plays the customer.",
+        "ai_lines": [
+          "Hi, I'd like to see a menu please.",
+          "I'll have an iced coffee.",
+          "Can I get the turkey club sandwich?",
+          "I'll do the fries, please.",
+          "That's all, thanks!",
+          "This looks great!",
+          "Everything was really good!",
+          "Yes, I'm ready for the check."
+        ],
+        "tips": "Greet them warmly, take their order, ask about sides, bring the check!"
+      },
+      "es": {
+        "name": "Práctica de Servir (Tú eres Mesero)",
+        "ai_role": "customer",
+        "description": "Practica ser mesero. La IA juega el cliente.",
+        "ai_lines": [
+          "Hola, quisiera ver el menú por favor.",
+          "Un café con hielo, por favor.",
+          "¿Me das el sándwich club de pavo?",
+          "Las papas fritas, por favor.",
+          "Eso es todo, ¡gracias!",
+          "¡Se ve muy bien!",
+          "¡Todo estuvo muy bueno!",
+          "Sí, la cuenta por favor."
+        ],
+        "tips": "¡Salúdalos calurosamente, toma su orden, pregunta sobre acompañamientos, trae la cuenta!"
+      }
+    },
+    "host_only": {
+      "en": {
+        "name": "Practice Greeting (You are Host)",
+        "ai_role": "customer",
+        "description": "Practice being a host/greeter. AI plays the customer.",
+        "ai_lines": [
+          "Hi! Table for two, please.",
+          "Just one, please.",
+          "Thanks!",
+          "Do you have a table by the window?",
+          "Perfect, thank you!"
+        ],
+        "tips": "Ask how many, show them to a table or tell them to sit anywhere!"
+      },
+      "es": {
+        "name": "Práctica de Recibir (Tú eres Anfitrión)",
+        "ai_role": "customer",
+        "description": "Practica ser anfitrión. La IA juega el cliente.",
+        "ai_lines": [
+          "¡Hola! Mesa para dos, por favor.",
+          "Solo uno, por favor.",
+          "¡Gracias!",
+          "¿Tienen mesa junto a la ventana?",
+          "¡Perfecto, gracias!"
+        ],
+        "tips": "¡Pregunta cuántos son, muéstrales una mesa o diles que se sienten donde quieran!"
+      }
+    }
+  }
+}
