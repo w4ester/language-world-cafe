@@ -202,6 +202,13 @@ POST /chat             # Qwen3 chat completion
 GET  /test-ollama      # Test Ollama connection
 ```
 
+### Voice TTS Engines (local-first)
+
+- Default: **Piper** (offline) when `PIPER_MODEL_PATH` points to a Piper ONNX voice and the `piper` binary is on PATH (or set `PIPER_BINARY`).
+- Fallback: **Edge-TTS** (cloud) when Piper is missing or when `TTS_ENGINE=edge-tts`.
+- Optional env vars: `TTS_ENGINE` (`piper`|`edge-tts`), `PIPER_MODEL_PATH` (onnx voice), `PIPER_BINARY` (cli name/path), `PIPER_SPEAKER_ID` (numeric speaker id for multi-speaker models).
+- Frontend override: pass `?api=http://localhost:5002` to `voice-chat-with-coach.html` (or set in `voice-chat-remote.html`) to point at a different backend port; language select supports `Auto / Mixed` to mirror the learner using Whisper detection.
+
 ### System Requirements
 
 **Minimum** (Demo works, slower):

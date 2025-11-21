@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Voice Chat - Local Model</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .test-scenarios {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .test-scenarios h3 {
+            color: #856404;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .test-scenarios ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .test-scenarios li {
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+
+        .voice-button {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .voice-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        .voice-button:active {
+            transform: scale(0.95);
+        }
+
+        .voice-button.recording {
+            animation: pulse 1.5s infinite;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .voice-button.processing {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .voice-button svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 1.1em;
+            color: #333;
+            margin: 20px 0;
+            min-height: 28px;
+            font-weight: 500;
+        }
+
+        .conversation {
+            margin-top: 30px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .conversation:empty::before {
+            content: "Conversation will appear here...";
+            color: #999;
+            font-style: italic;
+            display: block;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-left: 20%;
+            text-align: right;
+        }
+
+        .message.ai {
+            background: white;
+            color: #333;
+            margin-right: 20%;
+            border: 2px solid #e0e0e0;
+        }
+
+        .message-label {
+            font-size: 0.75em;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .settings {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .setting-group label {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .setting-group select {
+            padding: 10px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .setting-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .clear-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+
+        .clear-button:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Test Voice Chat</h1>
+        <p class="subtitle">Testing qwen3:8b bilingual coaching capabilities</p>
+
+        <div class="test-scenarios">
+            <h3>🧪 Try these scenarios (like the OpenAI example):</h3>
+            <ul>
+                <li>"Walk me through ordering coffee at a cafe"</li>
+                <li>"Now let's do that in Spanish"</li>
+                <li>"How do I say 'table for two' in Spanish?"</li>
+                <li>"Say it in English first, then Spanish"</li>
+                <li>"Go step-by-step, give me English then Spanish and I'll practice"</li>
+                <li>"Stop" (and see if it actually stops)</li>
+                <li>Switch languages mid-conversation</li>
+            </ul>
+        </div>
+
+        <div class="settings">
+            <div class="setting-group">
+                <label>Language Mode:</label>
+                <select id="language">
+                    <option value="auto">Auto / Mixed</option>
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label>AI Voice:</label>
+                <select id="gender">
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="voice-button" id="voiceButton">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+            </svg>
+        </button>
+
+        <div class="status" id="status">Press and hold to speak</div>
+
+        <div class="conversation" id="conversation"></div>
+
+        <center>
+            <button class="clear-button" onclick="clearConversation()">Clear Conversation</button>
+        </center>
+    </div>
+
+    <script>
+        const API_BASE = new URLSearchParams(window.location.search).get('api') || 'http://localhost:5002';
+
+        let mediaRecorder;
+        let audioChunks = [];
+        let conversationHistory = [];
+        let isRecording = false;
+        let isProcessing = false;
+
+        const voiceButton = document.getElementById('voiceButton');
+        const status = document.getElementById('status');
+        const conversation = document.getElementById('conversation');
+        const languageSelect = document.getElementById('language');
+        const genderSelect = document.getElementById('gender');
+
+        // Check health on load
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+                console.log('Backend health:', data);
+                if (data.status === 'healthy') {
+                    console.log('✅ Backend ready');
+                }
+            } catch (error) {
+                console.error('Backend not available:', error);
+                status.textContent = '❌ Backend not available on ' + API_BASE;
+                status.style.color = 'red';
+            }
+        }
+
+        checkHealth();
+
+        // Mouse/Touch events for press-and-hold
+        voiceButton.addEventListener('mousedown', startRecording);
+        voiceButton.addEventListener('mouseup', stopRecording);
+        voiceButton.addEventListener('mouseleave', () => {
+            if (isRecording) stopRecording();
+        });
+        voiceButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startRecording();
+        });
+        voiceButton.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            stopRecording();
+        });
+
+        async function startRecording() {
+            if (isProcessing || isRecording) return;
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    await sendAudio(audioBlob);
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+                voiceButton.classList.add('recording');
+                status.textContent = '🎤 Recording... (release to send)';
+            } catch (error) {
+                console.error('Error starting recording:', error);
+                status.textContent = '❌ Microphone access denied';
+            }
+        }
+
+        function stopRecording() {
+            if (!isRecording) return;
+
+            mediaRecorder.stop();
+            isRecording = false;
+            voiceButton.classList.remove('recording');
+            voiceButton.classList.add('processing');
+            status.textContent = '⚙️ Processing...';
+        }
+
+        async function sendAudio(audioBlob) {
+            isProcessing = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'audio.webm');
+                formData.append('scenario', 'free_chat');
+                formData.append('language', languageSelect.value);
+                formData.append('gender', genderSelect.value);
+                formData.append('history', JSON.stringify(conversationHistory));
+
+                const response = await fetch(`${API_BASE}/voice-chat`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // Handle non-200 responses explicitly
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Add to conversation history
+                conversationHistory.push(
+                    { role: 'user', content: data.user_text },
+                    { role: 'assistant', content: data.ai_text }
+                );
+
+                // Display messages
+                addMessage('user', data.user_text);
+                addMessage('ai', data.ai_text, data.detected_language);
+
+                // Play AI response
+                const audioData = atob(data.audio);
+                const audioArray = new Uint8Array(audioData.length);
+                for (let i = 0; i < audioData.length; i++) {
+                    audioArray[i] = audioData.charCodeAt(i);
+                }
+                const aiAudioBlob = new Blob([audioArray], { type: data.audio_mime || 'audio/mp3' });
+                const audioUrl = URL.createObjectURL(aiAudioBlob);
+                const audio = new Audio(audioUrl);
+
+                // Handle audio playback with proper error handling
+                const playPromise = audio.play();
+
+                if (playPromise !== undefined) {
+                    playPromise
+                        .then(() => {
+                            audio.onended = () => {
+                                voiceButton.classList.remove('processing');
+                                status.textContent = 'Press and hold to speak';
+                                isProcessing = false;
+                            };
+                        })
+                        .catch(err => {
+                            console.error('Audio play failed:', err);
+                            voiceButton.classList.remove('processing');
+                            status.textContent = 'Response ready (click to try again)';
+                            isProcessing = false;
+                        });
+                } else {
+                    // Fallback: assume it's okay
+                    audio.onended = () => {
+                        voiceButton.classList.remove('processing');
+                        status.textContent = 'Press and hold to speak';
+                        isProcessing = false;
+                    };
+                }
+
+            } catch (error) {
+                console.error('Error sending audio:', error);
+                status.textContent = `❌ Error: ${error.message}`;
+                voiceButton.classList.remove('processing');
+                isProcessing = false;
+            }
+        }
+
+        function addMessage(type, text, language = '') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const label = document.createElement('div');
+            label.className = 'message-label';
+            label.textContent = type === 'user' ? 'You' : `AI${language ? ` (${language})` : ''}`;
+
+            const content = document.createElement('div');
+            content.textContent = text;
+
+            messageDiv.appendChild(label);
+            messageDiv.appendChild(content);
+            conversation.appendChild(messageDiv);
+
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+
+        function clearConversation() {
+            conversationHistory = [];
+            conversation.innerHTML = '';
+            status.textContent = 'Press and hold to speak';
+        }
+    </script>
+</body>
+</html>
