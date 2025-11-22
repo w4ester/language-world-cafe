@@ -397,4 +397,16 @@ Questions? Want to see this in action?
 
 ---
 
+## 🧪 Test Interface
+
+Try the new **test-chat.html** for free-form coaching practice:
+- Patient word-by-word teaching mode
+- Meta-request handling ("step by step", "one word at a time")
+- Strict English/Spanish language clamping
+- Increased context window (200 tokens, 8k context)
+
+Visit: `http://localhost:8000/test-chat.html?api=http://localhost:5002`
+
+---
+
 **w4ester & ai orchestration**
